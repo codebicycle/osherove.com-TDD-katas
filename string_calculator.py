@@ -16,6 +16,17 @@ class StringCalculator:
         pattern = "[{}\n]".format(delimiter)
         numbers_list = re.split(pattern, string_numbers)
         sum = 0
+        negatives = []
         while len(numbers_list) > 0:
-            sum += int(numbers_list.pop(0))
+            current_nr = int(numbers_list.pop(0))
+            if current_nr < 0:
+                negatives.append(str(current_nr))
+                continue
+
+            sum += current_nr
+
+        if negatives:
+            message = 'negatives not allowed ' + ' '.join(negatives)
+            raise ValueError(message)
+
         return sum

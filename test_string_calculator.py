@@ -46,3 +46,13 @@ def test_add_handles_newlines(calculator):
 def test_add_with_provided_delimiter(calculator):
     result = calculator.add("//;\n1;2")
     assert 3 == result
+
+def test_add_with_negative_numbers_raises_exception(calculator):
+    with pytest.raises(ValueError) as excinfo:
+        calculator.add("2, -1")
+    excinfo.match('negatives not allowed -1')
+
+def test_add_all_negative_numbers_apear_in_exception_message(calculator):
+    with pytest.raises(ValueError) as excinfo:
+        calculator.add("-4, 2, -1, -99, -7, 3")
+    excinfo.match('-4 -1 -99 -7')
