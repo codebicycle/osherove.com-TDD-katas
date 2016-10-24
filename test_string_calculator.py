@@ -50,9 +50,12 @@ def test_add_with_provided_delimiter(calculator):
 def test_add_with_negative_numbers_raises_exception(calculator):
     with pytest.raises(ValueError) as excinfo:
         calculator.add("2, -1")
-    excinfo.match('negatives not allowed -1')
+    excinfo.match('negatives not allowed')
 
 def test_add_all_negative_numbers_apear_in_exception_message(calculator):
     with pytest.raises(ValueError) as excinfo:
         calculator.add("-4, 2, -1, -99, -7, 3")
-    excinfo.match('-4 -1 -99 -7')
+    excinfo.match('-4')
+    excinfo.match('-99')
+    excinfo.match('-1')
+    excinfo.match('-7')
