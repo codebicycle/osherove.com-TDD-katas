@@ -2,4 +2,7 @@
 class StringCalculator:
 
     def add(self, string_numbers):
-        return 0
+        if string_numbers == '':
+            return 0
+        else:
+            return int(string_numbers)
