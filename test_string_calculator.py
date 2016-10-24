@@ -26,3 +26,7 @@ def calculator():
 def test_add_empty_string(calculator):
     result = calculator.add('')
     assert 0 == result
+
+def test_add_single_number(calculator):
+    result = calculator.add('1')
+    assert 1 == result
