@@ -34,3 +34,11 @@ def test_add_single_number(calculator):
 def test_add_two_numbers(calculator):
     result = calculator.add('1,2')
     assert 3 == result
+
+def test_add_multiple_numbers(calculator):
+    result = calculator.add('1,2,3,4,5')
+    assert 15 == result
+
+def test_add_handles_newlines(calculator):
+    result = calculator.add("1\n2,3")
+    assert 6 == result

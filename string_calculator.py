@@ -1,3 +1,4 @@
+import re
 
 class StringCalculator:
 
@@ -5,7 +6,8 @@ class StringCalculator:
         if string_numbers == '':
             return 0
 
-        numbers_list = string_numbers.split(',')
+        pattern = "[,\n]"
+        numbers_list = re.split(pattern, string_numbers)
         sum = 0
         while len(numbers_list) > 0:
             sum += int(numbers_list.pop(0))
