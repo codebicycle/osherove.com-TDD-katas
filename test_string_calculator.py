@@ -42,3 +42,7 @@ def test_add_multiple_numbers(calculator):
 def test_add_handles_newlines(calculator):
     result = calculator.add("1\n2,3")
     assert 6 == result
+
+def test_add_with_provided_delimiter(calculator):
+    result = calculator.add("//;\n1;2")
+    assert 3 == result
