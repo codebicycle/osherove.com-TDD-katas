@@ -30,3 +30,7 @@ def test_add_empty_string(calculator):
 def test_add_single_number(calculator):
     result = calculator.add('1')
     assert 1 == result
+
+def test_add_two_numbers(calculator):
+    result = calculator.add('1,2')
+    assert 3 == result
