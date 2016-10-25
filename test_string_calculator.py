@@ -67,3 +67,15 @@ def test_add_ignores_large_numbers(calculator):
 def test_add_with_multi_char_delimiters(calculator):
     result = calculator.add("//[***]\n1***2***3")
     assert 6 == result
+
+def test_add_allows_multiple_delimiters(calculator):
+    result = calculator.add("//[*][%]\n1*2%3")
+    assert 6 == result
+
+def test_add_allows_multiple_multi_char_delimiters(calculator):
+    result = calculator.add("//[***][%%][;]\n1***2%%3;4")
+    assert 10 == result
+
+def test_add_allows_multiple_multi_char_delimiters_or_newline(calculator):
+    result = calculator.add("//[...][;;]\n1;;2\n3...4")
+    assert 10 == result

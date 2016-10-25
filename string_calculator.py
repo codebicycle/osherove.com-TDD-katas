@@ -22,14 +22,14 @@ class StringCalculator:
 
 
     def __parse_numbers(self, input_str):
-        delimiter   = self.__delimiter(input_str)
+        delimiters  = self.__delimiters(input_str)
         str_numbers = self.__data(input_str)
 
         if str_numbers == '':
             return []
 
-        escaped_delimiter    = re.escape(delimiter)
-        delimiter_or_newline = "{}|\n".format(escaped_delimiter)
+        pattern = '|'.join(map(re.escape, delimiters))
+        delimiter_or_newline = pattern + "|\n"
         str_list = re.split(delimiter_or_newline, str_numbers)
 
         numbers  = list(map(lambda x: int(x), str_list))
@@ -37,19 +37,16 @@ class StringCalculator:
         return numbers
 
 
-    def __delimiter(self, input_str):
+    def __delimiters(self, input_str):
         if input_str.startswith('//'):
             first_line = input_str.split('\n', 1)[0]
             pattern = "\[(.+?)\]"
-            match = re.search(pattern, first_line)
-            if match:
-                delimiter = match.group(1)
-            else:
-                delimiter = first_line[2]
+            delimiters = re.findall(pattern, first_line)
+            if not delimiters:
+                delimiters = [first_line[2]]
         else:
-            delimiter = ','
-      
-        return delimiter
+            delimiters = [',']
+        return delimiters
 
 
     def __data(self, input_str):
