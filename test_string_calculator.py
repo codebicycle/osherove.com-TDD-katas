@@ -63,3 +63,7 @@ def test_add_all_negative_numbers_apear_in_exception_message(calculator):
 def test_add_ignores_large_numbers(calculator):
     result = calculator.add("2,1001")
     assert 2 == result
+
+def test_add_with_multi_char_delimiters(calculator):
+    result = calculator.add("//[***]\n1***2***3")
+    assert 6 == result
