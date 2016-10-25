@@ -59,3 +59,7 @@ def test_add_all_negative_numbers_apear_in_exception_message(calculator):
     excinfo.match('-99')
     excinfo.match('-1')
     excinfo.match('-7')
+
+def test_add_ignores_large_numbers(calculator):
+    result = calculator.add("2,1001")
+    assert 2 == result

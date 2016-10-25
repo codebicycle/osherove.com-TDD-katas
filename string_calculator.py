@@ -9,6 +9,8 @@ class StringCalculator:
         for num in numbers:
             if num < 0:
                 negatives.append(str(num))
+            elif num > 1000:
+                continue
             else:
                 total += num
 
