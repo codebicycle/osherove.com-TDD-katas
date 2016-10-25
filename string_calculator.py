@@ -2,8 +2,8 @@ import re
 
 class StringCalculator:
 
-    def add(self, input):
-        numbers     = self.__parse_numbers(input)
+    def add(self, input_str):
+        numbers     = self.__parse_numbers(input_str)
         total       = 0
         negatives   = []
         for num in numbers:
@@ -22,30 +22,36 @@ class StringCalculator:
 
 
     def __parse_numbers(self, input_str):
-        delimiters  = self.__delimiters(input_str)
         str_numbers = self.__data(input_str)
-
         if str_numbers == '':
             return []
 
-        pattern = '|'.join(map(re.escape, delimiters))
-        delimiter_or_newline = pattern + "|\n"
-        str_list = re.split(delimiter_or_newline, str_numbers)
+        pattern  = self.__split_pattern(input_str)
+        str_list = re.split(pattern, str_numbers)
 
         numbers  = list(map(lambda x: int(x), str_list))
 
         return numbers
 
 
+    def __split_pattern(self, input_str):
+        delimiters = self.__delimiters(input_str)
+        pattern    = '|'.join(map(re.escape, delimiters))
+
+        return pattern
+
+
     def __delimiters(self, input_str):
         if input_str.startswith('//'):
             first_line = input_str.split('\n', 1)[0]
-            pattern = "\[(.+?)\]"
+            pattern    = "\[(.+?)\]"
             delimiters = re.findall(pattern, first_line)
             if not delimiters:
                 delimiters = [first_line[2]]
         else:
             delimiters = [',']
+        delimiters.append('\n')
+
         return delimiters
 
 
