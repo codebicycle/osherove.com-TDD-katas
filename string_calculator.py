@@ -21,38 +21,39 @@ class StringCalculator:
         return total
 
 
-    def __parse_numbers(self, input):
-        delimiter, string_numbers = self.__delimiter_data(input)
+    def __parse_numbers(self, input_str):
+        delimiter   = self.__delimiter(input_str)
+        str_numbers = self.__data(input_str)
 
-        if string_numbers == '':
+        if str_numbers == '':
             return []
 
-        escaped_delimiter = re.escape(delimiter)
-        pattern  = "{}|\n".format(escaped_delimiter)
-        str_list = re.split(pattern, string_numbers)
+        escaped_delimiter    = re.escape(delimiter)
+        delimiter_or_newline = "{}|\n".format(escaped_delimiter)
+        str_list = re.split(delimiter_or_newline, str_numbers)
 
         numbers  = list(map(lambda x: int(x), str_list))
 
         return numbers
 
 
-    def __delimiter_data(self, input):
-        if input.startswith('//'):
-            first_line, string_numbers = input.split('\n', 1)
-            delimiter = self.__delimiter(first_line)
+    def __delimiter(self, input_str):
+        if input_str.startswith('//'):
+            first_line = input_str.split('\n', 1)[0]
+            pattern = "\[(.+?)\]"
+            match = re.search(pattern, first_line)
+            if match:
+                delimiter = match.group(1)
+            else:
+                delimiter = first_line[2]
         else:
-            string_numbers  = input
-            delimiter       = ','
-
-        return delimiter, string_numbers
-
-
-    def __delimiter(self, line):
-        pattern = "\[(.+?)\]"
-        match = re.search(pattern, line)
-        if match:
-            delimiter = match.group(1)
-        else:
-            delimiter = line[2]
-
+            delimiter = ','
+      
         return delimiter
+
+
+    def __data(self, input_str):
+        if input_str.startswith('//'):
+            return input_str.split('\n', 1)[-1]
+        else:
+            return input_str
